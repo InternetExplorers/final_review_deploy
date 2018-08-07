@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  database:
+    build: db/
+    image: mysql/mysql-server:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=records
+      - MYSQL_USER=root
+    ports: 
+      - 3307:3306
+
+  reviews:
+    build: reviews/
+    depends_on:
+      - 'database'
+    restart: on-failure 
+    ports:
+      - '3004:3004'
